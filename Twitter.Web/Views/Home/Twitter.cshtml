@@ -1,0 +1,48 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div id="loginContainer">
+    <input id="userName" placeholder="userName" />
+    <button id="loginButton" class="btn btn-primary">Log in</button>
+</div>
+
+
+<div class="row">
+    <div class="col-md-3">
+        <h2>Compose</h2>
+        <div id="user">User: </div>
+        <textarea id="message" placeholder="Message" rows="4"></textarea>
+        <br/>
+        <button class="btn btn-primary" id="postButton" disabled="disabled">Post</button>
+    </div>
+    <div class="col-md-3">
+        <h2>Timeline</h2>
+        <div id="timeline"></div>
+    </div>
+    <div class="col-md-3">
+        <h2>Notifications</h2>
+        <div id="mentions"></div>
+    </div>
+    <div class="col-md-3">
+        <h2>Firehose</h2>
+        <div id="firehose">
+
+        </div>
+    </div>
+</div>
+@section Scripts
+    {
+<script>
+    var userName = null;
+
+    $(function(){
+       $("#loginButton").click(function(){
+            userName = $("#userName").val();
+            $("#user").text("User: " + userName);
+            $("#loginContainer").hide();
+            $("#postButton").removeAttr('disabled');
+       })
+    });
+</script>
+}
