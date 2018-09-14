@@ -4,6 +4,7 @@ using Xunit;
 
 namespace Twitter.Test
 {
+
     public class TransactionTests
     {
         readonly TwitterModel _twitter;

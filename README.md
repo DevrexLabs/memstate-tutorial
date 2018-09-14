@@ -68,7 +68,9 @@ Add some tests for the commands and queries by creating an instance of Twitter, 
 ## Task 5: Integration tests
 Repeat the tests from task 4 but running through the Memstate engine. The test setup should:
 ```
-Config.Current.UseInMemoryFileSystem().AppendRandomSuffixToStreamName();
+var cfg = Config.Current;cfg.UseInMemoryFileSystem();
+var settings = cfg.GetSettings<EngineSettings>();
+settings.WithRandomSuffixAppendedToStreamName();
 var engine = Engine.Start<Twitter>();
 ```
 
