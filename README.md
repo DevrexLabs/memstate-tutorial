@@ -25,6 +25,7 @@ This will create and a switch to a branch named dev-1. Go ahead and do this now 
 
 ## Task 1 : Creating the domain model
 Time required: 40-60 minutes
+
 In the Twitter.Core library, add a `Tweet` class, a `User` class and a `Twitter` class.
 
 The Twitter class should have 
@@ -45,6 +46,8 @@ Keep it simple and just do the bare minimum at this point, you will add more sta
 * Prefer passing basic arguments instead of entities, example: `PostTweet(string user, string message, Datetime when)` instead of `PostTweet(Tweet tweet)`
 
 ## Task 2 : Testing the domain model
+Time required: 10-20 minutes
+
 Add a unit test project using your preferred unit testing library.
 Write some of the tests below, you might need to add behavior to your domain model to make them pass. Don't get carried away with details, this is just to demonstrate how you would do TDD if you're into that kind of thing.
 
@@ -54,6 +57,8 @@ Write some of the tests below, you might need to add behavior to your domain mod
  
 
 ## Task 3 : Adding command and queries
+Time required: 10-20 minutes
+
 Add the `Memstate.All` package to the `Twitter.Core` project. Create command and query classes:
 * `class PostTweet : Command<Twitter, long>` (returns the assigned id
 * `class ReadTimeLine : Query<Twitter, Tweet[]>` (retrieve a range of tweets for a specific user)
@@ -63,9 +68,13 @@ Add the `Memstate.All` package to the `Twitter.Core` project. Create command and
 override the `Execute(Twitter state)` method adding the correct behavior.
 
 ## Task 4 : Testing commands and queries
+Time required: 15-30 minutes
+
 Add some tests for the commands and queries by creating an instance of Twitter, executing the command/query then verifying return values and possible state changes.
 
 ## Task 5: Integration tests
+Time required: 15-30 minutes
+
 Repeat the tests from task 4 but running through the Memstate engine. The test setup should:
 ```
 var cfg = Config.Current;cfg.UseInMemoryFileSystem();
@@ -78,6 +87,8 @@ and then in your test methods
 `engine.Execute(command or query)`
 
 ## Task 6: Implementing ASP.NET Controllers
+Time required: 10-20 minutes
+
 In the web project, add a reference to the domain model project and the `Memstate.All` nuget package.
 Add a controller named `TwitterController` 
 In the constructor create a client using `Client.For<Twitter>()` or if you have the skills configure it for dependency injection as a singleton.
