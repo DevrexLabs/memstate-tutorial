@@ -1,6 +1,9 @@
 # Autosave files
 *~
 
+#memstate journal files
+*.journal
+
 # build
 [Oo]bj/
 [Bb]in/

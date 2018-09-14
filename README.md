@@ -1,11 +1,11 @@
 # Memstate tutorial
 
-This is material for a 2-day course.
+This is material for a 2-day course. If you are doing a 3 hour workshop jump in at task 3, examine what's already there and run the unit tests.
 
 ## Prerequisites
 * Development environment for .NET Core such as VS2017 on Windows, VS for mac or VS Code on any platform
-* Docker for some of the last modules
-* You are an experienced C# developer with an open mind
+* Docker for some of the later modules
+* Experienced C# developer with an open mind
 
 
 ## Task 0 : Clone the repository
@@ -75,7 +75,7 @@ var engine = Engine.Start<Twitter>();
 ```
 
 and then in your test methods
-engine.Execute(command or query)
+`engine.Execute(command or query)`
 
 ## Task 6: Implementing ASP.NET Controllers
 In the web project, add a reference to the domain model project and the `Memstate.All` nuget package.
@@ -83,9 +83,8 @@ Add a controller named `TwitterController`
 In the constructor create a client using `Client.For<Twitter>()` or if you have the skills configure it for dependency injection as a singleton.
 
 Create action methods for the following operations:
-* `GET Timeline(userName, skip, take)`
-* `GET All(skip, take)`
-* `GET Mentions(userName)`
+* `GET UserTweets(userName, skip, take)`
+* `GET AllTweets(skip, take)`
 * `POST Tweet(userName, message)`
 * `POST Follow(userName, followee)`
 

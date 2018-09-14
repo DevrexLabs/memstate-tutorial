@@ -51,18 +51,38 @@
             $("#postButton").removeAttr('disabled');
        });
 
-       $("#refreshTimeline").click(function(){
-          $.get("/twitter/timeline/" + userName, function(data){
+       $("#postButton").click(function(){
+           var message = $("#message").val();
+           $.post("/twitter/tweet", {user: userName, message: message}, function(data){
+               console.log(data);
+               $("#message").val("");
+           })
+       });
 
+       $("#refreshTimeline").click(function(){
+          $.get("/twitter/usertweets", {user:userName}, function(data){
+              console.log(data);
+              refresh(data, "#timeline")
           });
        });
        
        $("#refreshAll").click(function(){
-          $.get("/twitter/all/", function(data){
-
+          $.get("/twitter/alltweets/", function(data){
+              refresh(data, "#firehose");
           });
        });
 
     });
+
+    function refresh(tweets, target) {
+        let targetElement = $(target);
+        targetElement.empty();
+        tweets.forEach(tweet => {
+        $("<div><h5>@@" + tweet.userName 
+            + "</h5><p>" 
+            + tweet.message 
+            + "</p></div>").prependTo(targetElement);
+            });
+    }
 </script>
 }
