@@ -8,7 +8,7 @@ namespace Twitter.Core
         public readonly int Skip;
         public readonly int Take;
 
-        public UsersTweets(string userName, int skip, int take)
+        public UsersTweets(string userName, int skip = 0, int take = 20)
         {
             UserName = userName;
             Skip = skip;
