@@ -4,7 +4,7 @@ using System.Linq;
 
 namespace Twitter.Core
 {
-    public class Twitter
+    public class TwitterModel
     {
         private int nextTweetId = 1;
 
@@ -18,7 +18,7 @@ namespace Twitter.Core
         /// </summary>
         public IDictionary<int, Tweet> AllTweets { get; private set; }
 
-        public Twitter()
+        public TwitterModel()
         {
             AllTweets = new SortedDictionary<int, Tweet>();
             UsersByName = new SortedDictionary<string, User>();
@@ -29,6 +29,8 @@ namespace Twitter.Core
             EnsureUserExists(userName);
             var tweet = new Tweet(nextTweetId++, userName, message, when);
             AllTweets.Add(tweet.Id, tweet);
+            var user = UsersByName[userName];
+            user.Tweets.Add(tweet);
             return tweet.Id;
         }
 

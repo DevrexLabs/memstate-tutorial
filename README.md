@@ -24,6 +24,7 @@ This will create and a switch to a branch named dev-1. Go ahead and do this now 
 
 
 ## Task 1 : Creating the domain model
+Time required: 40-60 minutes
 In the Twitter.Core library, add a `Tweet` class, a `User` class and a `Twitter` class.
 
 The Twitter class should have 
@@ -50,8 +51,6 @@ Write some of the tests below, you might need to add behavior to your domain mod
  * Tweets are assigned unique int ids in an ever increasing sequence
  * Tweets are added to the users list of tweets
  * Tweets are added to the all tweets collection
- * Sequences of tweets have a maximum size of 100 (optional)
- * Follow users
  
 
 ## Task 3 : Adding command and queries
