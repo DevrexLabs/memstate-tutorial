@@ -9,6 +9,7 @@ TestResults/
 
 # globs
 Makefile.in
+.vscode
 *.DS_Store
 *.sln.cache
 *.suo

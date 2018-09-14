@@ -18,14 +18,20 @@
     </div>
     <div class="col-md-3">
         <h2>Timeline</h2>
+        <button id="refreshTimeline">Refresh</button>
         <div id="timeline"></div>
     </div>
     <div class="col-md-3">
         <h2>Notifications</h2>
-        <div id="mentions"></div>
+        <div id="notifications">
+
+           In task 8 we will use SignalR to subscribe to event notifications
+
+        </div>
     </div>
     <div class="col-md-3">
         <h2>Firehose</h2>
+        <button id="refreshAll">Refresh</button>
         <div id="firehose">
 
         </div>
@@ -37,12 +43,26 @@
     var userName = null;
 
     $(function(){
+
        $("#loginButton").click(function(){
             userName = $("#userName").val();
             $("#user").text("User: " + userName);
             $("#loginContainer").hide();
             $("#postButton").removeAttr('disabled');
-       })
+       });
+
+       $("#refreshTimeline").click(function(){
+          $.get("/twitter/timeline/" + userName, function(data){
+
+          });
+       });
+       
+       $("#refreshAll").click(function(){
+          $.get("/twitter/all/", function(data){
+
+          });
+       });
+
     });
 </script>
 }
