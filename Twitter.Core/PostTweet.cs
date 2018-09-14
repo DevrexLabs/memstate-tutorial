@@ -9,9 +9,9 @@ namespace Twitter.Core
         public readonly string Message;
         public readonly DateTime PostedAt;
 
-        public PostTweet(string user, string message, DateTime postedAt)
+        public PostTweet(string userName, string message, DateTime postedAt)
         {
-            UserName = user;
+            UserName = userName;
             Message = message;
             PostedAt = postedAt;
         }
