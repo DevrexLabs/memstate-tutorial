@@ -8,14 +8,11 @@ namespace Twitter.Web.Controllers
 {
     public class TwitterController : Controller
     {
-        private Client<TwitterModel> _client;
+        private readonly Client<TwitterModel> _client;
 
-        public TwitterController()
+        public TwitterController(Client<TwitterModel> client)
         {
-            Task.Run(async () =>
-            {
-                _client = await Client.For<TwitterModel>();
-            }).Wait();
+            _client = client;
         }
 
         public async Task<IActionResult> AllTweets(int skip = 0, int take = 20)
