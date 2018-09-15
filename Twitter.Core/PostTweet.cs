@@ -19,6 +19,7 @@ namespace Twitter.Core
         public override int Execute(TwitterModel model)
         {
             var tweetId = model.PostTweet(UserName, Message, PostedAt);
+            RaiseEvent(new Tweeted(model.AllTweets[tweetId]));
             return tweetId;
         }
     }

@@ -12,6 +12,8 @@ namespace Twitter.Test
     {
         Engine<TwitterModel> _engine;
 
+        List<Event> _eventsEmitted = new List<Event>();
+
         public IntegrationTests()
         {
             Task.Run( async () =>
@@ -23,6 +25,9 @@ namespace Twitter.Test
                 settings.WithRandomSuffixAppendedToStreamName();
 
                 _engine = await Engine.Start<TwitterModel>();
+
+                _engine.CommandExecuted += (record, isLocal, events)
+                    => _eventsEmitted.AddRange(events);
 
                 var cmd1 = new PostTweet("bart", "This is the worst day of my life", DateTime.Now);
                 await _engine.Execute(cmd1);
@@ -55,12 +60,28 @@ namespace Twitter.Test
             Assert.Equal(1, tweets[0].Id);
             Assert.Equal("bart", tweets[0].UserName);
             Assert.Equal("This is the worst day of my life", tweets[0].Message);
-
             Assert.Equal(2, tweets[1].Id);
             Assert.Equal("homer", tweets[1].UserName);
 
             Assert.Equal(3, tweets[2].Id);
             Assert.Equal("bart", tweets[0].UserName);
+        }
+
+        [Fact]
+        public async Task Events_are_emitted()
+        {
+            var cmd = new AllTweets(take: 5);
+            var tweets = await _engine.Execute(cmd);
+
+            Assert.Equal(3, _eventsEmitted.Count);
+
+            Assert.IsType<Tweeted>(_eventsEmitted[0]);
+            Assert.Equal(((Tweeted)_eventsEmitted[0]).Tweet, tweets[0]);
+
+            Assert.IsType<Tweeted>(_eventsEmitted[1]);
+            Assert.Equal(((Tweeted)_eventsEmitted[1]).Tweet, tweets[1]);
+
+
         }
 
     }

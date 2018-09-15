@@ -16,6 +16,7 @@ namespace Twitter.Core
         public override void Execute(TwitterModel model)
         {
             model.Follow(Follower, Followee);
+            RaiseEvent(new Followed(Follower, Followee));
         }
     }
 }

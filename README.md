@@ -72,6 +72,7 @@ Time required: 15-30 minutes
 
 Add some tests for the commands and queries by creating an instance of Twitter, executing the command/query then verifying return values and possible state changes.
 
+
 ## Task 5: Integration tests
 Time required: 15-30 minutes
 
@@ -102,9 +103,14 @@ Create action methods for the following operations:
 The UI is a single page and already hooked up. It uses jquery ajax to talk to the backend, examine the `Twitter.cshtml` view for details. Test manually that you can tweet, follow, refresh to see all.
 
 ## Task 7: Reactive
-Define the events `Tweeted` and `Followed`. They should inherit from the `Event` base class. Publish events from within the commands `Execute()` by calling `RaiseEvent()` on the `Command` base class.
+Time: 
+Bugs: If you upodat
+Define the events `Tweeted` and `Followed`. They should inherit from the `Event` base class. Publish events from within the commands `Execute()` by calling `RaiseEvent()` on the `Command` base class. 
+Note: The tests from Task 4 will fail if you raise events. This bug is fixed with memstate version 0.6.6
 
-(Optional) Add tests to verify that the correct events are published. To subscribe, call `Subscribe<TEvent>(Action<TEvent> handler)`
+(Optional) Add tests to verify that the correct events are published. The events are passed as an argument to the `Engine.CommandExecuted` event.
+
+To subscribe to events use `Client.Subscribe<TEvent>(Action<TEvent> handler)` or `Client.Subscribe<TEvent>(Action<TEvent> handler, IEventFilter filter)`
 
 Add a SignalR hub that keeps track of connected users, subscribes to events and relays them to clients.
 
