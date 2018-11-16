@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Twitter.Core;
+using Twitter.Web.Hubs;
 
 namespace Twitter.Web
 {
@@ -38,6 +39,8 @@ namespace Twitter.Web
                                        .GetResult();
 
             services.AddSingleton(memstateClient);
+            services.AddSingleton(typeof(EventRelay));
+            services.AddSignalR();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
@@ -65,6 +68,8 @@ namespace Twitter.Web
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            app.UseSignalR(routes => routes.MapHub<TwitterHub>("/twitter-hub"));
         }
     }
 }

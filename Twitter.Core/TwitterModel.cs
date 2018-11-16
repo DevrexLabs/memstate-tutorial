@@ -49,6 +49,22 @@ namespace Twitter.Core
             throw new ArgumentException("No such user: " + followerName);
         }
 
+        public void Unfollow(string followerName, string followeeName)
+        {
+            if (UsersByName.TryGetValue(followerName, out var follower))
+            {
+                if (UsersByName.TryGetValue(followeeName, out var followee))
+                {
+                    follower.Followees.Remove(followee);
+                    followee.Followers.Remove(follower);
+                    return;
+                }
+                throw new ArgumentException("No such user: " + followeeName);
+            }
+            throw new ArgumentException("No such user: " + followerName);
+
+        }
+
         public Tweet[] GetAllTweets(int skip = 0, int take = 20)
         {
             return AllTweets

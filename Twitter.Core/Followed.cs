@@ -1,8 +1,8 @@
-﻿using System;
-using Memstate;
+﻿using Memstate;
 
 namespace Twitter.Core
 {
+
     public class Followed : Event
     {
         public readonly string Follower;

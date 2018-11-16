@@ -106,11 +106,14 @@ The UI is a single page and already hooked up. It uses jquery ajax to talk to th
 Time: 
 Bugs: If you upodat
 Define the events `Tweeted` and `Followed`. They should inherit from the `Event` base class. Publish events from within the commands `Execute()` by calling `RaiseEvent()` on the `Command` base class. 
-Note: The tests from Task 4 will fail if you raise events. This bug is fixed with memstate version 0.6.6
+Note: The tests from Task 4 might fail when you raise events. This bug is fixed with memstate version 0.6.6
 
 (Optional) Add tests to verify that the correct events are published. The events are passed as an argument to the `Engine.CommandExecuted` event.
 
 To subscribe to events use `Client.Subscribe<TEvent>(Action<TEvent> handler)` or `Client.Subscribe<TEvent>(Action<TEvent> handler, IEventFilter filter)`
+
+This tutorial on SignalR should 
+https://docs.microsoft.com/en-us/aspnet/core/tutorials/signalr
 
 Add a SignalR hub that keeps track of connected users, subscribes to events and relays them to clients.
 

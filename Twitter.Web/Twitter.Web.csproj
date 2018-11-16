@@ -12,4 +12,13 @@
   <ItemGroup>
     <ProjectReference Include="..\Twitter.Core\Twitter.Core.csproj" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Hubs\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Remove="wwwroot\lib\signalr.min.js" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="wwwroot\lib\signalr.min.js" />
+  </ItemGroup>
 </Project>

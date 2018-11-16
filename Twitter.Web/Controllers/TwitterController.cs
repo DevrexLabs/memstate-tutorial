@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Memstate;
 using Microsoft.AspNetCore.Mvc;
@@ -30,6 +31,15 @@ namespace Twitter.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Tweet(string user, string message)
         {
+            if (Regex.IsMatch(message, "^(un)?follow @\\S+$", RegexOptions.IgnoreCase))
+            {
+                string followee = message.Substring(message.IndexOf("@") + 1);
+                if (message.StartsWith("un", StringComparison.InvariantCultureIgnoreCase))
+                {
+                    await _client.Execute(new Unfollow(user, followee));
+                }
+                else await _client.Execute(new Follow(user, followee));
+            }
             var cmd = new PostTweet(user, message, DateTime.Now);
             var tweetId = await _client.Execute(cmd);
             return Json(new { id = tweetId });

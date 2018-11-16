@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using Twitter.Core;
 using Xunit;
 
@@ -15,6 +16,8 @@ namespace Twitter.Test
             var tweet2 = _twitter.PostTweet("homer", "@bart the worst day yet", DateTime.Now);
             var tweet3 = _twitter.PostTweet("bart", ". @homer Eat my shorts", DateTime.Now);
         }
+
+#pragma warning disable RECS0063 // Warns when a culture-aware 'StartsWith' call is used by default.
 
         [Fact]
         public void Tweets_are_added_to_users_sequence_of_tweets()

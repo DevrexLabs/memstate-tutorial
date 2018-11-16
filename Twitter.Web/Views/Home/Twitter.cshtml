@@ -2,6 +2,10 @@
     ViewData["Title"] = "Home Page";
 }
 
+<style>
+    a.user {color:black;}
+</style>
+
 <div id="loginContainer">
     <input id="userName" placeholder="userName" />
     <button id="loginButton" class="btn btn-primary">Log in</button>
@@ -13,76 +17,28 @@
         <h2>Compose</h2>
         <div id="user">User: </div>
         <textarea id="message" placeholder="Message" rows="4"></textarea>
-        <br/>
+        <br />
         <button class="btn btn-primary" id="postButton" disabled="disabled">Post</button>
     </div>
     <div class="col-md-3">
         <h2>Timeline</h2>
         <button id="refreshTimeline">Refresh</button>
-        <div id="timeline"></div>
+        <ul id="timeline"></ul>
     </div>
     <div class="col-md-3">
         <h2>Notifications</h2>
-        <div id="notifications">
-
-           In task 8 we will use SignalR to subscribe to event notifications
-
-        </div>
+        <ul id="notifications">
+        </ul>
     </div>
     <div class="col-md-3">
         <h2>Firehose</h2>
         <button id="refreshAll">Refresh</button>
-        <div id="firehose">
-
-        </div>
+        <ul id="firehose">
+        </ul>
     </div>
 </div>
 @section Scripts
-    {
-<script>
-    var userName = null;
-
-    $(function(){
-
-       $("#loginButton").click(function(){
-            userName = $("#userName").val();
-            $("#user").text("User: " + userName);
-            $("#loginContainer").hide();
-            $("#postButton").removeAttr('disabled');
-       });
-
-       $("#postButton").click(function(){
-           var message = $("#message").val();
-           $.post("/twitter/tweet", {user: userName, message: message}, function(data){
-               console.log(data);
-               $("#message").val("");
-           })
-       });
-
-       $("#refreshTimeline").click(function(){
-          $.get("/twitter/usertweets", {user:userName}, function(data){
-              console.log(data);
-              refresh(data, "#timeline")
-          });
-       });
-       
-       $("#refreshAll").click(function(){
-          $.get("/twitter/alltweets/", function(data){
-              refresh(data, "#firehose");
-          });
-       });
-
-    });
-
-    function refresh(tweets, target) {
-        let targetElement = $(target);
-        targetElement.empty();
-        tweets.forEach(tweet => {
-        $("<div><h5>@@" + tweet.userName 
-            + "</h5><p>" 
-            + tweet.message 
-            + "</p></div>").prependTo(targetElement);
-            });
-    }
-</script>
+{
+    <script src="~/lib/signalr.min.js"></script>
+    <script src="~/js/twitter.js"></script>
 }
