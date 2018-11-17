@@ -104,7 +104,6 @@ The UI is a single page and already hooked up. It uses jquery ajax to talk to th
 
 ## Task 7: Reactive
 Time: 
-Bugs: If you upodat
 Define the events `Tweeted` and `Followed`. They should inherit from the `Event` base class. Publish events from within the commands `Execute()` by calling `RaiseEvent()` on the `Command` base class. 
 Note: The tests from Task 4 might fail when you raise events. This bug is fixed with memstate version 0.6.6
 
@@ -115,7 +114,7 @@ To subscribe to events use `Client.Subscribe<TEvent>(Action<TEvent> handler)` or
 This tutorial on SignalR should 
 https://docs.microsoft.com/en-us/aspnet/core/tutorials/signalr
 
-Add a SignalR hub that keeps track of connected users, subscribes to events and relays them to clients.
+Add a SignalR hub that keeps track of connected users, subscribes to events and relays them to clients. Note that Hubs are stateless so have a look at `IHubContext<T>`
 
 ## Task 8: Running a standalone server
 Run a standalone server by adding a .NET Core console application named `Twitter.Host`, add the `Memstate.Host` nuget package and call the `Host.Run<Twitter>()` from your main method.
