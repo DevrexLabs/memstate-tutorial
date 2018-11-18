@@ -20,13 +20,13 @@ namespace Twitter.Web.Hubs
         /// <summary>
         /// Connected users and names of who they are following
         /// </summary>
-        readonly Dictionary<string, ISet<String>> _followeeNames;
+        readonly Dictionary<string, ISet<String>> _connectedUsersAndFollowers;
 
         public EventRelay(IHubContext<TwitterHub> hub, Client<TwitterModel> client)
         {
             _hub = hub;
             _client = client;
-            _followeeNames = new Dictionary<string, ISet<string>>();
+            _connectedUsersAndFollowers = new Dictionary<string, ISet<string>>();
             HandleTweeted().GetAwaiter().GetResult();
         }
 
@@ -38,7 +38,7 @@ namespace Twitter.Web.Hubs
         {
             var names = await _client.Execute(new FolloweeNames(userName));
             var key = userName + "@" + id;
-            _followeeNames[key] = new HashSet<string>(names);
+            _connectedUsersAndFollowers[key] = new HashSet<string>(names);
         }
 
         /// <summary>
@@ -50,18 +50,18 @@ namespace Twitter.Web.Hubs
         {
             return _client.Subscribe<Tweeted>(async t =>
             {
-                foreach (var key in _followeeNames.Keys)
+                foreach (var key in _connectedUsersAndFollowers.Keys)
                 {
-                    var idx = key.IndexOf("@");
-                    var userName = key.Substring(0, idx);
-                    var connectionId = key.Substring(idx + 1);
+                    var userNameAndConnectionId = key.Split("@");
+                    var userName = userNameAndConnectionId[0];
+                    var connectionId = userNameAndConnectionId[1];
                     var data = new
                     {
                         user = t.Tweet.UserName,
                         message = t.Tweet.Message,
                         postedAt = t.Tweet.PostedAt,
                         isMention = IsMention(userName, t.Tweet.Message),
-                        isTimeline = _followeeNames[key].Contains(t.Tweet.UserName)
+                        isTimeline = _connectedUsersAndFollowers[key].Contains(t.Tweet.UserName)
                     };
 
                     var firehose = true;
@@ -76,6 +76,12 @@ namespace Twitter.Web.Hubs
             });
         }
 
+        /// <summary>
+        /// True if a message mentions the specific user
+        /// </summary>
+        /// <returns><c>true</c>, if mention was ised, <c>false</c> otherwise.</returns>
+        /// <param name="userName">User name without the @</param>
+        /// <param name="message">The message to check</param>
         private bool IsMention(string userName, string message)
         {
             return Regex.IsMatch(message, "@" + userName + "\\b", RegexOptions.IgnoreCase);

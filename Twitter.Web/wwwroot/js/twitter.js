@@ -55,17 +55,16 @@ var connection = new signalR.HubConnectionBuilder()
         .withUrl("/twitter-hub").build();
 
 connection.on("tweet", function (tweet) {
-
     let childElement = $(render(tweetTemplate, [tweet.user, tweet.message]));
-    
-    childElement.prependTo($("#firehose"));
+    childElement.prependTo("#firehose");
+
     // Add to notifications
     if (tweet.isMention) {
-        childElement.prependTo($("#notifications"));
+        childElement.clone().prependTo("#notifications");
     }
     // We follow this user so add to timeline
     if (tweet.isTimeline || tweet.user === userName) {
-        childElement.prependTo("#timeline");
+        childElement.clone().prependTo("#timeline");
     }
         
         
