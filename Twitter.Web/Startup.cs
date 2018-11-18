@@ -36,6 +36,8 @@ namespace Twitter.Web
                 options.MinimumSameSitePolicy = SameSiteMode.None;
             });
 
+            Config.Current.GetSettings<ClientSettings>().Type = ConnectionType.Remote;
+
             var memstateClient = Client.For<TwitterModel>()
                                        .GetAwaiter()
                                        .GetResult();

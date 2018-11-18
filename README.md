@@ -117,9 +117,11 @@ https://docs.microsoft.com/en-us/aspnet/core/tutorials/signalr
 Add a SignalR hub that keeps track of connected users, subscribes to events and relays them to clients. Note that Hubs are stateless so have a look at `IHubContext<T>`
 
 ## Task 8: Running a standalone server
-Run a standalone server by adding a .NET Core console application named `Twitter.Host`, add the `Memstate.Host` nuget package and call the `Host.Run<Twitter>()` from your main method.
-Configure the web application to connect to the external server.
-`Client.For<Twitter>()` should now return a `RemoteClient<Twitter>` instead of a `LocalClient<Twitter`.
+Run a standalone Memstate server by adding a .NET Core console application named `Twitter.Server`, add a reference to the `Memstate.Host` nuget package. In the main method, build and `Start()` a `Host<TwitterModel>` by using the `Memstate.Host.HostBuilder` class.
+
+Now configure the web application to connect to the external server instead of the locally embedded engine. Change the `Type` from Local to Remote on the object returned by calling `Config.Current.GetSettings<ClientSettings>()`. `Client.For<Twitter>()` will now return a `RemoteClient<Twitter>` instead of a `LocalClient<Twitter`.
+
+Note: The reactive bits from Task 7 do not work with a remote memstate server.
 
 ## Task 9: Using Event Store
 Install and launch eventstore or run it in a docker container.
